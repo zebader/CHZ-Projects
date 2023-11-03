@@ -5,16 +5,19 @@ import styles from "@/styles/Home.module.css";
 import Countdown from "react-countdown";
 import { formatBalance } from "@/util/formatBalance";
 
+/* Token address suggested in the exercise */
+const ELIGIBLE_TOKEN_ADDRESS = "0xF9C0F80a6c67b1B39bdDF00ecD57f2533ef5b688"
+
 function MeetingPage() {
-    const { message, nativeBalance } = useBalances();
+    const { message, tokenBalances, nativeBalance } = useBalances();
 
     const native =
         nativeBalance && Number(nativeBalance.balance) > 0
             ? formatBalance(nativeBalance.balance)
             : 0;
-    const isEligible = Number(native) > 0;
+    const isEligible = Number(native) > 0 && tokenBalances.filter((tokenBalance) => tokenBalance.token_address === ELIGIBLE_TOKEN_ADDRESS).length > 0;
     const countdownDate = new Date("2023-12-31T23:59:59");
-
+ 
     if (message) return <p>{message}</p>;
     return (
         <main className={styles.main}>
