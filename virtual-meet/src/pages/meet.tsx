@@ -15,7 +15,9 @@ function MeetingPage() {
         nativeBalance && Number(nativeBalance.balance) > 0
             ? formatBalance(nativeBalance.balance)
             : 0;
-    const isEligible = Number(native) > 0 && tokenBalances.filter((tokenBalance) => tokenBalance.token_address === ELIGIBLE_TOKEN_ADDRESS).length > 0;
+    const eligibleTokenBalance = tokenBalances.filter((tokenBalance) => tokenBalance.token_address === ELIGIBLE_TOKEN_ADDRESS)[0]?.balance;
+    
+    const isEligible = Number(native) > 0 && eligibleTokenBalance && Number(formatBalance(eligibleTokenBalance || "0")) > 1;
     const countdownDate = new Date("2023-12-31T23:59:59");
  
     if (message) return <p>{message}</p>;
