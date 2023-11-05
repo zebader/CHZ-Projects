@@ -5,11 +5,13 @@ import { useNFT, useValidDirectListings } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
 import CancelSellingCard from "@/components/CancelSelling";
 import SellNFTCard from "@/components/SellNFTCard";
+import TransferNFTCard from "@/components/TransferNFTCard";
 import { useRouter } from "next/router";
 
 function NFTDetailsPage() {
     const router = useRouter();
     const [price, setPrice] = useState(0.01);
+    const [address, setAddress] = useState("");
     const [symbol, setSymbol] = useState("");
     const [listingID, setListingID] = useState("");
     const [nftID, setNftID] = useState("");
@@ -59,11 +61,18 @@ function NFTDetailsPage() {
                                 listingID={listingID}
                             />
                         ) : (
-                            <SellNFTCard
-                                price={price}
-                                onUpdatePrice={setPrice}
-                                id={nftID}
-                            />
+                            <div className="flex flex-row gap-4 ">
+                                <SellNFTCard
+                                    price={price}
+                                    onUpdatePrice={setPrice}
+                                    id={nftID}
+                                />
+                                <TransferNFTCard
+                                    address={address}
+                                    onUpdateAddress={setAddress}
+                                    nftID={nftID}
+                                />
+                                </div>
                         )}
                     </>
                 )}
